@@ -38,7 +38,8 @@ var app = {
         app.setupPush();
     },
     setupPush: function() {
-        console.log('calling push init');
+        //console.log('calling push init');
+        alert('calling push init');
         var push = PushNotification.init({
             "android": {
                 "senderID": "369410224872"
@@ -55,15 +56,39 @@ var app = {
         console.log('after init');
 
         push.on('registration', function(data) {
-            console.log('registration event: ' + data.registrationId);
-
+            //console.log('registration event: ' + data.registrationId);
+            alert('adale!...vamo a pushear!....registration event: ' + data.registrationId);
             var oldRegId = localStorage.getItem('registrationId');
             if (oldRegId !== data.registrationId) {
                 // Save new registration ID
                 localStorage.setItem('registrationId', data.registrationId);
                 // Post registrationId to your app server as the value has changed
             }
+    
+            var usuario = JSON.parse(localStorage.getItem("usuario"));//parseando los datos del usuario
+            var datos = {
+                token: data.registrationId,
+                iduser: usuario._id
+            };
 
+            var jsondataResource = JSON.stringify(datos);
+            
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                crossDomain: true,
+                //url: "http://159.203.128.165:8080/register",
+                url: "http://192.168.0.104:3001/register",
+                data: jsondataResource
+            })
+            .done(function( msg ) {
+                alert("Done "+msg);
+            })
+            .error(function(e){
+                alert("Error "+e);
+            });
+            
             var parentElement = document.getElementById('registration');
             var listeningElement = parentElement.querySelector('.waiting');
             var receivedElement = parentElement.querySelector('.received');
