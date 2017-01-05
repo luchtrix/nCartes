@@ -1,6 +1,6 @@
-var app = angular.module('secreto', []);
-//var url_server = 'http://192.168.0.104:3001/';
-var url_server = 'http://192.168.0.32:3001/';
+var myApp = angular.module('secreto', []);
+var url_server = 'http://192.168.0.104:3001/';
+//var url_server = 'http://192.168.0.32:3001/';
 var socket = io.connect(url_server);
 
 $(document).ready(function (){
@@ -45,7 +45,10 @@ $(document).ready(function (){
     });
 });
 
-app.controller('secretarioCtrl', ['$scope', '$http', function($scope, $http){
+myApp.controller('secretarioCtrl', ['$scope', '$http', function($scope, $http){
+	
+	app.setupPush();//inicializando para las notificaciones
+	
     $('.collapsible').collapsible();
 	//alert("controlador principal "+$location.path())
 	//----------------------------------------------------
@@ -1148,21 +1151,21 @@ app.controller('secretarioCtrl', ['$scope', '$http', function($scope, $http){
     socket.on("fin_acuerdo", function (idS) {
         //alert("idj "+idj+" motivo "+motivo+" id "+id);
         if ($scope.usuario._id == idS) {
-            playBeep();
-            vibrate();
+            //playBeep();
+            //vibrate();
             getNotificaciones();
             Materialize.toast("Se finalizo un acuerdo!", 3500);
         };
     });
 
-    function playBeep() {
+    /*function playBeep() {
         navigator.notification.beep(1);
     }
 
     // Vibrate for 2 seconds
     function vibrate() {
         navigator.notification.vibrate(2000);
-    }
+    }*/
 
     $scope.logout = function(){
         localStorage.removeItem("usuario")
