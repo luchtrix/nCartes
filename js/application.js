@@ -1,5 +1,5 @@
 var myApp = angular.module('secreto', []);
-var url_server = 'http://192.168.0.104:3001/';
+var url_server = 'http://192.168.0.105:3001/';
 //var url_server = 'http://192.168.0.32:3001/';
 var socket = io.connect(url_server);
 
@@ -47,7 +47,7 @@ $(document).ready(function (){
 
 myApp.controller('secretarioCtrl', ['$scope', '$http', function($scope, $http){
 	
-	app.setupPush();//inicializando para las notificaciones
+	//app.setupPush();//inicializando para las notificaciones
 	
     $('.collapsible').collapsible();
 	//alert("controlador principal "+$location.path())
